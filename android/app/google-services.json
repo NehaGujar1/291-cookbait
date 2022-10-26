@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "51196639036",
+    "project_id": "cookbait-app",
+    "storage_bucket": "cookbait-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51196639036:android:677dd2171afa585648d039",
+        "android_client_info": {
+          "package_name": "com.example.cookbait"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51196639036-481mv76e4mcma7q03slkajuknf0p63sc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8z1N4hHgZmYn5iyho0uAZ7Vx7J93188M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51196639036-481mv76e4mcma7q03slkajuknf0p63sc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
