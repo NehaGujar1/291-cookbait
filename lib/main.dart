@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-void main() {
+import 'firebase.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -26,7 +29,52 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: FutureBuilder(
+        future: FirestoreDB().getData(),
+        builder: (BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.none &&
+              !snapshot.hasData) {
+            return Center(
+              child: Text('Error'),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+            List<String>? list = snapshot.data;
+            return ListView.builder(
+              itemCount: list!.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  child: Text(list[index]),
+                );
+              },
+            );
+        },
+        // child: Center(
+        //   child: ElevatedButton(
+        //     child: Text('Press'),
+        //     onPressed: () async {
+        //       print('start');
+        //       await FirestoreDB().addData();
+        //       print('done');
+        //     },
+        //   ),
+        // ),
+      ),
     );
   }
 }
@@ -102,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
