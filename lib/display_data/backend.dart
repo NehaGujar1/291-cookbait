@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DisplayOptions {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  List<String> test_ing = ['salt', 'chicken', 'coriander', 'basil', 'beansprouts', 'black '];
   Future<List<String>> getData(List<String> test_ing) async {
     QuerySnapshot<Map<String, dynamic>> qr =
         await FirebaseFirestore.instance.collection('recipes').get();
@@ -23,20 +24,20 @@ class DisplayOptions {
       var k = (j * j) / (test_ing.length * m['Ingredients'].length);
       if (k >= 0.9) {
         fetch_90.add(m['image-url']);
-        fetch_90.add(m['ID']);
-        fetch_90.add(m['Name']);
+        // fetch_90.add(m['ID']);
+        // fetch_90.add(m['Name']);
       } else if (k >= 0.8) {
         fetch_80.add(m['image-url']);
-        fetch_80.add(m['ID']);
-        fetch_80.add(m['Name']);
+        // fetch_80.add(m['ID']);
+        // fetch_80.add(m['Name']);
       } else if (k >= 0.7) {
         fetch_70.add(m['image-url']);
-        fetch_70.add(m['ID']);
-        fetch_70.add(m['Name']);
+        // fetch_70.add(m['ID']);
+        // fetch_70.add(m['Name']);
       } else if (k >= 0.6) {
         fetch_60.add(m['image-url']);
-        fetch_60.add(m['ID']);
-        fetch_60.add(m['Name']);
+        // fetch_60.add(m['ID']);
+        // fetch_60.add(m['Name']);
       }
       j = 0;
       // str2.add(m['ID']);
