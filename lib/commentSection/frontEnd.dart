@@ -58,7 +58,6 @@ class _CommentSectionState extends State<CommentSection> {
                   validator: (value) {
                     if (value!.isEmpty ||
                         !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                      //allow upper and lower case alphabets and space
                       return "Enter Correct Name";
                     } else {
                       return null;
@@ -71,10 +70,7 @@ class _CommentSectionState extends State<CommentSection> {
                   },
                   textInputAction: TextInputAction.done,
                 ),
-
-
               ),
-
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.all(10),
@@ -135,24 +131,16 @@ class _CommentSectionState extends State<CommentSection> {
                   },
                   textInputAction: TextInputAction.done,
                 ),
-
               ),
               Container(
                 padding: const EdgeInsets.all(10),
                 child: ElevatedButton(
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        //check if form data are valid,
-                        // your process task ahead if all data are valid
                         name = nameController.text;
                         comment = commentController.text;
                         email = emailController.text;
-                        // print(name);
-                        // print(email);
-                        // print(comment);
-                        //print('start');
                         await FireBaseCollectionOfComments().addData(name, email, comment, recipeID);
-                        //print('done');
                       }
                     },
                     child: const Text("Submit Data")),
