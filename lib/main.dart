@@ -37,14 +37,18 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  void setState(int index) {
+    index++;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
         future: FirestoreDB().getData(),
-        builder: (BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
-          if (snapshot.connectionState == ConnectionState.none &&
-              !snapshot.hasData) {
+        builder: (BuildContext context,
+            AsyncSnapshot<List<List<String>>?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.none) {
             return Center(
               child: Text('Error'),
             );
@@ -54,15 +58,40 @@ class HomePage extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-            List<String>? list = snapshot.data;
-            return ListView.builder(
-              itemCount: list!.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  child: Text(list[index]),
-                );
-              },
-            );
+          List<List<String>>? list = snapshot.data;
+          return GridView.builder(
+            // physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: list!.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, crossAxisSpacing: 6.0, mainAxisSpacing: 6.0),
+            itemBuilder: (context, index) {
+              // resizeToAvoidBottomInset:
+              // true;
+              if (list[index][0] == "fetch_90") {
+                return Text(">=90%");
+              } else if (list[index][0] == "fetch_80") {
+                return Text(">=80%");
+              } else if (list[index][0] == "fetch_70") {
+                return Text(">=70%");
+              } else if (list[index][0] == "fetch_60") {
+                return Text(">=60%");
+              } else
+                return ElevatedButton(
+                    // ignore: empty_statements
+                    onPressed: () {
+                      ;
+                    },
+                    child: Column(
+                      children: [
+                        Image.network(list[index][0]),
+                        Expanded(
+                          child: Text(list[index][1]),
+                        ),
+                      ],
+                    ));
+            },
+          );
         },
         // child: Center(
         //   child: ElevatedButton(
