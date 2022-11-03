@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import 'Individual_Recipe.dart';
 import 'firebase.dart';
 
 Future<void> main() async {
@@ -40,10 +40,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: FirestoreDB().getData(),
-        builder: (BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
-          if (snapshot.connectionState == ConnectionState.none &&
+      body: SingleChildScrollView(
+         child: Column(
+          children: <Widget>[
+            SizedBox(
+              height:100,
+            ),
+           /*FutureBuilder(
+             future: FirestoreDB().getData(),
+             builder: (BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
+              if (snapshot.connectionState == ConnectionState.none &&
               !snapshot.hasData) {
             return Center(
               child: Text('Error'),
@@ -55,15 +61,27 @@ class HomePage extends StatelessWidget {
             );
           }
             List<String>? list = snapshot.data;
-            return ListView.builder(
-              itemCount: list!.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  child: Text(list[index]),
+            return
+              SizedBox(
+                  height: 100,
+                  child : ListView.builder(
+                  itemCount: list!.length,
+                    itemBuilder: (context, index) {
+                  return Container(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                      list[index],
+                      style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+
+                  ),
                 );
               },
-            );
-        },
+            ));
+        },),*/
         // child: Center(
         //   child: ElevatedButton(
         //     child: Text('Press'),
@@ -74,7 +92,16 @@ class HomePage extends StatelessWidget {
         //     },
         //   ),
         // ),
-      ),
+      //),
+            ElevatedButton(
+              child: Text('Individual page'),
+              onPressed: ()=> Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Individual_Recipe()),
+              ),),
+    ]
+    )
+    )
     );
   }
 }
@@ -145,6 +172,12 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            ElevatedButton(
+              child: Text('Individual page'),
+              onPressed: ()=> Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Individual_Recipe()),
+              ),),
             const Text(
               'You have pushed the button this many times:',
             ),

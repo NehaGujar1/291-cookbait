@@ -8,6 +8,7 @@ class FirestoreDB {
     List<String> str=[];
      for (var element in qr.docs) {
       final m = element.data();
+      m.length;
       str.add(m['data']);
     }
 
@@ -20,3 +21,4 @@ class FirestoreDB {
         .add({'data': 'hello'});
   }
 }
+
