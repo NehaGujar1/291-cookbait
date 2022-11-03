@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'commentSection/frontEnd.dart';
 
 import 'firebase.dart';
 
@@ -40,40 +41,43 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: FirestoreDB().getData(),
-        builder: (BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
-          if (snapshot.connectionState == ConnectionState.none &&
-              !snapshot.hasData) {
-            return Center(
-              child: Text('Error'),
+      body: // FutureBuilder(
+          //   future: FirestoreDB().getData(),
+          //   builder: (BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
+          //     if (snapshot.connectionState == ConnectionState.none &&
+          //         !snapshot.hasData) {
+          //       return const Center(
+          //         child: Text('Error'),
+          //       );
+          //     }
+          //     if (snapshot.connectionState == ConnectionState.waiting) {
+          //       return const Center(
+          //         child: CircularProgressIndicator(),
+          //       );
+          //     }
+          //       List<String>? list = snapshot.data;
+          //       return ListView.builder(
+          //         itemCount: list!.length,
+          //         itemBuilder: (context, index) {
+          //           return Text(list[index]);
+          //         },
+          //       );
+          //   },
+          Center(
+        child: ElevatedButton(
+          child: const Text('Press'),
+          // onPressed: () async {
+          //   print('start');
+          //   await FirestoreDB().addData();
+          //   print('done');
+          // },
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CommentSection()),
             );
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-            List<String>? list = snapshot.data;
-            return ListView.builder(
-              itemCount: list!.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  child: Text(list[index]),
-                );
-              },
-            );
-        },
-        // child: Center(
-        //   child: ElevatedButton(
-        //     child: Text('Press'),
-        //     onPressed: () async {
-        //       print('start');
-        //       await FirestoreDB().addData();
-        //       print('done');
-        //     },
-        //   ),
-        // ),
+          },
+        ),
       ),
     );
   }

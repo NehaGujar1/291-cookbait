@@ -6,17 +6,16 @@ class FirestoreDB {
     QuerySnapshot<Map<String, dynamic>> qr =
         await FirebaseFirestore.instance.collection('comments').get();
     List<String> str=[];
-     for (var element in qr.docs) {
+    for (var element in qr.docs) {
       final m = element.data();
       str.add(m['data']);
     }
-
     return str;
   }
 
   Future<void> addData() async {
     await FirebaseFirestore.instance
-        .collection('comments')
-        .add({'data': 'hello'});
+        .collection('comments').doc('1001')
+        .update({'Raiwat': 'hello2'});
   }
 }
