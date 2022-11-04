@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreDB {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  Future<List<List<String>>> getData() async {
+
+  Future<List<List<String>>> getData(List<String?> selectedIngredients) async {
     QuerySnapshot<Map<String, dynamic>> qr =
-    await FirebaseFirestore.instance.collection('recipes').get();
+        await FirebaseFirestore.instance.collection('recipes').get();
     List<List<String>> str = [];
     // print(str[0]);
     List<String> fetchAllUrls = [];
@@ -23,18 +24,6 @@ class FirestoreDB {
     List<String> fetch70Id = [];
     List<String> fetch80Id = [];
     List<String> fetch90Id = [];
-    List<String> selectedIngredients = [
-      'tomato',
-      'salt',
-      'cumin powder jeera',
-      'pepper pepper',
-      'cloves garlic',
-      'virgin olive oil',
-      'onion',
-      'dry beans such cannellini soya beans',
-      'red chilli powder cayenne pepper',
-      'dried oregano'
-    ];
     int mnj = 0;
     for (var element in qr.docs) {
       if (mnj > 1500) break;
@@ -76,43 +65,103 @@ class FirestoreDB {
     int i;
     for (i = 0; i < fetch_90.length; i++) {
       if (i == 0) {
-        fetchAllUrls.add("fetch_90");
-        fetchAllNames.add("fetch_90");
-        fetchAllIds.add("fetch_90");
+        fetchAllUrls.add(">=90");
+        fetchAllNames.add(">=90");
+        fetchAllIds.add(">=90");
+        fetchAllUrls.add(" ");
+        fetchAllNames.add(">=90");
+        fetchAllIds.add(" ");
+        fetchAllUrls.add(" ");
+        fetchAllNames.add(">=90");
+        fetchAllIds.add(" ");
       }
       fetchAllUrls.add(fetch_90[i]);
       fetchAllNames.add(fetch90Name[i]);
       fetchAllIds.add(fetch90Id[i]);
     }
+    if (fetchAllIds.length % 3 != 0) {
+      int rem = 3 - (fetchAllIds.length % 3);
+      while (rem > 0) {
+        fetchAllUrls.add("text");
+        fetchAllNames.add(" ");
+        fetchAllIds.add(" ");
+        rem--;
+      }
+    }
     for (i = 0; i < fetch_80.length; i++) {
       if (i == 0) {
-        fetchAllUrls.add("fetch_80");
-        fetchAllNames.add("fetch_80");
-        fetchAllIds.add("fetch_80");
+        fetchAllUrls.add(">=80");
+        fetchAllNames.add(">=80");
+        fetchAllIds.add(">=80");
+        fetchAllUrls.add(" ");
+        fetchAllNames.add(">=80");
+        fetchAllIds.add(" ");
+        fetchAllUrls.add(" ");
+        fetchAllNames.add(">=80");
+        fetchAllIds.add(" ");
       }
       fetchAllUrls.add(fetch_80[i]);
       fetchAllNames.add(fetch80Name[i]);
       fetchAllIds.add(fetch80Id[i]);
     }
+    if (fetchAllIds.length % 3 != 0) {
+      int rem = 3 - (fetchAllIds.length % 3);
+      while (rem > 0) {
+        fetchAllUrls.add("text");
+        fetchAllNames.add(" ");
+        fetchAllIds.add(" ");
+        rem--;
+      }
+    }
     for (i = 0; i < fetch_70.length; i++) {
       if (i == 0) {
-        fetchAllUrls.add("fetch_70");
-        fetchAllNames.add("fetch_70");
-        fetchAllIds.add("fetch_70");
+        fetchAllUrls.add(">=70");
+        fetchAllNames.add(">=70");
+        fetchAllIds.add(">=70");
+        fetchAllUrls.add(" ");
+        fetchAllNames.add(">=70");
+        fetchAllIds.add(" ");
+        fetchAllUrls.add(" ");
+        fetchAllNames.add(">=70");
+        fetchAllIds.add(" ");
       }
       fetchAllUrls.add(fetch_70[i]);
       fetchAllNames.add(fetch70Name[i]);
       fetchAllIds.add(fetch70Id[i]);
     }
+    if (fetchAllIds.length % 3 != 0) {
+      int rem = 3 - (fetchAllIds.length % 3);
+      while (rem > 0) {
+        fetchAllUrls.add("text");
+        fetchAllNames.add(" ");
+        fetchAllIds.add(" ");
+        rem--;
+      }
+    }
     for (i = 0; i < fetch_60.length; i++) {
       if (i == 0) {
-        fetchAllUrls.add("fetch_60");
-        fetchAllNames.add("fetch_60");
-        fetchAllIds.add("fetch_60");
+        fetchAllUrls.add(">=60");
+        fetchAllNames.add(">=60");
+        fetchAllIds.add(">=60");
+        fetchAllUrls.add(" ");
+        fetchAllNames.add(">=60");
+        fetchAllIds.add(" ");
+        fetchAllUrls.add(" ");
+        fetchAllNames.add(">=60");
+        fetchAllIds.add(" ");
       }
       fetchAllUrls.add(fetch_60[i]);
       fetchAllNames.add(fetch60Name[i]);
       fetchAllIds.add(fetch60Id[i]);
+    }
+    if (fetchAllIds.length % 3 != 0) {
+      int rem = 3 - (fetchAllIds.length % 3);
+      while (rem > 0) {
+        fetchAllUrls.add("text");
+        fetchAllNames.add(" ");
+        fetchAllIds.add(" ");
+        rem--;
+      }
     }
     for (int i = 0; i < fetchAllUrls.length; i++) {
       List<String> ls = [];
@@ -120,6 +169,27 @@ class FirestoreDB {
       ls.add(fetchAllNames[i]);
       ls.add(fetchAllIds[i]);
       str.add(ls);
+    }
+    if(str[0].isEmpty) {
+      fetchAllIds.add("Basic");
+      fetchAllUrls.add('');
+      fetchAllNames.add('');
+      fetchAllIds.add("Text");
+      fetchAllUrls.add('');
+      fetchAllNames.add('');
+      fetchAllIds.add("Text");
+      fetchAllUrls.add('');
+      fetchAllNames.add('');
+      //Start filling from here on
+      fetchAllIds.add('1');
+      fetchAllUrls.add('');
+      fetchAllNames.add('');
+      fetchAllIds.add('1');
+      fetchAllUrls.add('');
+      fetchAllNames.add('');
+      fetchAllIds.add('1');
+      fetchAllUrls.add('');
+      fetchAllNames.add('');
     }
     return str;
   }

@@ -1,27 +1,23 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'backEndDisplayRecipes.dart';
-
-Future<void> display() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const ChoicesScreen());
-}
+import 'frontEndIndividualRecipe.dart';
 
 class ChoicesScreen extends StatefulWidget {
-  const ChoicesScreen({Key? key}) : super(key: key);
+  final List<String?> selectedIngredients;
+
+  const ChoicesScreen({Key? key, required this.selectedIngredients})
+      : super(key: key);
 
   @override
   State<ChoicesScreen> createState() => _ChoicesScreenState();
 }
 
 class _ChoicesScreenState extends State<ChoicesScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: FirestoreDB().getData(),
+        future: FirestoreDB().getData(widget.selectedIngredients),
         builder: (BuildContext context,
             AsyncSnapshot<List<List<String>>?> snapshot) {
           if (snapshot.connectionState == ConnectionState.none) {
@@ -44,20 +40,30 @@ class _ChoicesScreenState extends State<ChoicesScreen> {
             itemBuilder: (context, index) {
               // resizeToAvoidBottomInset:
               // true;
-              if (list[index][0] == "fetch_90") {
-                return const Text(">=90%");
-              } else if (list[index][0] == "fetch_80") {
-                return const Text(">=80%");
-              } else if (list[index][0] == "fetch_70") {
-                return const Text(">=70%");
-              } else if (list[index][0] == "fetch_60") {
-                return const Text(">=60%");
+              if (list[index][1] == ">=90") {
+                return Text(list[index][0]);
+              } else if (list[index][1] == ">=80") {
+                return Text(list[index][0]);
+              } else if (list[index][1] == ">=70") {
+                return Text(list[index][0]);
+              } else if (list[index][1] == ">=60") {
+                return Text(list[index][0]);
+              } else if(list[index][2]=="Basic") {
+                return const Text('Since no recipes match the ingredients list we are providing some basic recipes:');
+              } else if (list[index][0] == "text") {
+                return Container();
               } else {
                 return ElevatedButton(
-                  // ignore: empty_statements
+                    // ignore: empty_statements
                     onPressed: () {
-                      String? recipeID = list[index][2];
-
+                      String? incorrectRecipeID = list[index][2];
+                      int recipeID = int.parse(incorrectRecipeID);
+                      recipeID--;
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => IndividualRecipe(
+                                  recipeID: recipeID.toString())));
                     },
                     child: Column(
                       children: [

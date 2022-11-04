@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'backEndIndividualRecipe.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const IndividualRecipe());
-}
+import 'frontEndCommentSection.dart';
 
 Widget _buildHeading({String name = ' '}) {
   return Container(
@@ -36,7 +30,6 @@ Widget _buildNormalText({String name = ' '}) {
 }
 
 Widget _buildSubheadings({String name = ' '}) {
-  //changed from Container to SizedBox due to QuickFix
   return SizedBox(
     height: 40,
     child: Text(
@@ -91,13 +84,15 @@ Widget _buildComments({required List<String> all}) {
 }
 
 class IndividualRecipe extends StatefulWidget {
-  const IndividualRecipe({Key? key}) : super(key: key);
+  final String recipeID;
+
+  const IndividualRecipe({Key? key, required this.recipeID}) : super(key: key);
 
   @override
-  State<IndividualRecipe> createState() => IndRecipe();
+  State<IndividualRecipe> createState() => _IndividualRecipeState();
 }
 
-class IndRecipe extends State<IndividualRecipe> {
+class _IndividualRecipeState extends State<IndividualRecipe> {
   var firestoreDB =
       FirebaseFirestore.instance.collection("comments").snapshots();
   var recipeDB = FirebaseFirestore.instance.collection("recipes").snapshots();
@@ -127,16 +122,14 @@ class IndRecipe extends State<IndividualRecipe> {
                               //to set border radius to button
                               borderRadius: BorderRadius.circular(32)),
                           textStyle: const TextStyle(color: Colors.white)),
-                      onPressed: () => Navigator.push(
+                      onPressed: () => Navigator.pop(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const IndividualRecipe()),
                       ),
                       child: const Icon(Icons.arrow_back_outlined),
                     ),
                   ),
                   FutureBuilder(
-                    future: FirestoreRecipe().getData(),
+                    future: FirestoreRecipe().getData(widget.recipeID),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<String>?> snapshot) {
                       if (snapshot.connectionState == ConnectionState.none &&
@@ -151,14 +144,10 @@ class IndRecipe extends State<IndividualRecipe> {
                         );
                       }
                       List<String>? list = snapshot.data;
-                      // print(list!.length);
-                      // print(list[0]);
                       var n = 3;
                       n = int.parse(list![2]);
                       String ingredientsList = "";
-                      //print(list[0]);
                       for (int i = 3; i < n + 3; i++)
-                      //replaced with interpolation using quickFix
                       {
                         ingredientsList =
                             '$ingredientsList\n${i - 2}${list[i]}';
@@ -217,7 +206,7 @@ class IndRecipe extends State<IndividualRecipe> {
                           ),
                         ),
                         FutureBuilder(
-                          future: FirestoreComments().getData('1001'),
+                          future: FirestoreComments().getData(widget.recipeID),
                           builder: (BuildContext context,
                               AsyncSnapshot<List<String>?> snapshot) {
                             if (snapshot.connectionState ==
@@ -254,21 +243,6 @@ class IndRecipe extends State<IndividualRecipe> {
                     height: 40,
                     width: 100,
                     alignment: Alignment.topLeft,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          alignment: Alignment.topLeft,
-                          backgroundColor: const Color(0xFFD80041),
-                          shape: RoundedRectangleBorder(
-                              //to set border radius to button
-                              borderRadius: BorderRadius.circular(32)),
-                          textStyle: const TextStyle(color: Colors.white)),
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const IndividualRecipe()),
-                      ),
-                      child: const Text('Add Story'),
-                    ),
                   ),
                   Container(
                     height: 40,
@@ -282,12 +256,15 @@ class IndRecipe extends State<IndividualRecipe> {
                               //to set border radius to button
                               borderRadius: BorderRadius.circular(32)),
                           textStyle: const TextStyle(color: Colors.white)),
+                      //This onPressed function is subject to correction
                       onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const IndividualRecipe()),
+                            builder: (context) => CommentSection(
+                                  recipeID: widget.recipeID,
+                                )),
                       ),
-                      child: const Icon(Icons.add_sharp),
+                      child: const Text("Add Comment"),
                     ),
                   ),
                 ],

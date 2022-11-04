@@ -1,3 +1,4 @@
+import 'package:cookbait/frontEndIndividualRecipe.dart';
 import 'package:flutter/material.dart';
 import 'backEndCommentSection.dart';
 
@@ -27,9 +28,10 @@ Widget _buildNormalText({String name = ' '}) {
   );
 }
 
-
 class CommentSection extends StatefulWidget {
-  const CommentSection({Key? key}) : super(key: key);
+  final String recipeID;
+
+  const CommentSection({Key? key, required this.recipeID}) : super(key: key);
 
   @override
   State<CommentSection> createState() => _CommentSectionState();
@@ -40,7 +42,8 @@ class _CommentSectionState extends State<CommentSection> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController commentController = TextEditingController();
-  String? name, email, comment, recipeID = '1004';
+  String? name, email, comment;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -166,12 +169,18 @@ class _CommentSectionState extends State<CommentSection> {
                         name = nameController.text;
                         comment = commentController.text;
                         email = emailController.text;
-                        await FireBaseCollectionOfComments().addData(name, email, comment, recipeID);
+                        await FireBaseCollectionOfComments().addData(
+                            name, email, comment, widget.recipeID, context);
+                        if (!mounted) return;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => IndividualRecipe(
+                                    recipeID: widget.recipeID)));
                       }
                     },
                     //child: const Text("Submit Data")),
-                    child: _buildNormalText(name: 'Comment')
-                ),
+                    child: _buildNormalText(name: 'Comment')),
               ),
             ],
           ),
