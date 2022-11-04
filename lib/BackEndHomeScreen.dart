@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 List<String> ingredients =[];
 class FirestoreDB {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -12,7 +13,6 @@ class FirestoreDB {
       str.add(m['Name']);
     }
     ingredients = str;
-
     return str;
   }
 
