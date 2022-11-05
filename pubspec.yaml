@@ -40,6 +40,7 @@ dependencies:
   lottie: ^1.4.3
   animate_do: ^2.1.0
   flutter_fadein: ^2.0.0
+  multi_select_flutter: ^4.1.2
 
 dev_dependencies:
   flutter_test:
