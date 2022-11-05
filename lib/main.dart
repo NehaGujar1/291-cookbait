@@ -1,165 +1,204 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'package:cookbait/launchScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:animate_do/animate_do.dart';
+import 'dart:ui' as ui;
 
-import 'firebase.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const HomePage(),
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Welcome Screen',
+      home: launchScreen(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class MainScreen extends StatelessWidget {
+  final Duration duration = const Duration(milliseconds: 800);
+
+  const MainScreen({Key? key}) : super(key: key);
+
+  /////////////////////////////////////
+  //@CodeWithFlexz on Instagram
+  //
+  //AmirBayat0 on Github
+  //Programming with Flexz on Youtube
+  /////////////////////////////////////
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: FutureBuilder(
-        future: FirestoreDB().getData(),
-        builder: (BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
-          if (snapshot.connectionState == ConnectionState.none &&
-              !snapshot.hasData) {
-            return Center(
-              child: Text('Error'),
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-            List<String>? list = snapshot.data;
-            return ListView.builder(
-              itemCount: list!.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  child: Text(list[index]),
-                );
-              },
-            );
-        },
-        // child: Center(
-        //   child: ElevatedButton(
-        //     child: Text('Press'),
-        //     onPressed: () async {
-        //       print('start');
-        //       await FirestoreDB().addData();
-        //       print('done');
-        //     },
-        //   ),
-        // ),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      backgroundColor: const Color.fromARGB(255, 239, 239, 239),
+      body: Container(
+        margin: const EdgeInsets.all(8),
+        width: size.width,
+        height: size.height,
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ///
+            FadeInUp(
+              duration: duration,
+              delay: const Duration(milliseconds: 2000),
+              child: Container(
+                margin: const EdgeInsets.only(
+                  top: 50,
+                  left: 5,
+                  right: 5,
+                ),
+                width: size.width,
+                height: size.height / 2,
+                child: Lottie.asset("./assets/wl.json", animate: true),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+
+            ///
+            const SizedBox(
+              height: 15,
+            ),
+
+            /// TITLE
+            FadeInUp(
+              duration: duration,
+              delay: const Duration(milliseconds: 1600),
+              child: const Text(
+                "Keep",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+
+            ///
+            const SizedBox(
+              height: 10,
+            ),
+
+            /// SUBTITLE
+            FadeInUp(
+              duration: duration,
+              delay: const Duration(milliseconds: 1000),
+              child: const Text(
+                "Keep various ways to contact and get in touch easily right from the app.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    height: 1.2,
+                    color: Colors.grey,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w300),
+              ),
+            ),
+
+            ///
+            Expanded(child: Container()),
+
+            /// GOOGLE BTN
+            FadeInUp(
+              duration: duration,
+              delay: const Duration(milliseconds: 600),
+              child: SButton(
+                size: size,
+                borderColor: Colors.grey,
+                color: Colors.white,
+                img: 'assets/g.png',
+                text: "Continue with Google",
+                textStyle: null,
+              ),
+            ),
+
+            ///
+            const SizedBox(
+              height: 20,
+            ),
+
+            /// GITHUB BTN
+            FadeInUp(
+              duration: duration,
+              delay: const Duration(milliseconds: 200),
+              child: SButton(
+                size: size,
+                borderColor: Colors.white,
+                color: const Color.fromARGB(255, 54, 54, 54),
+                img: 'assets/Gt.png',
+                text: "Sign up with GitHub",
+                textStyle: const TextStyle(color: Colors.white),
+              ),
+            ),
+
+            ///
+            const SizedBox(
+              height: 40,
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class SButton extends StatelessWidget {
+  const SButton({
+    Key? key,
+    required this.size,
+    required this.color,
+    required this.borderColor,
+    required this.img,
+    required this.text,
+    required this.textStyle,
+  }) : super(key: key);
+
+  final Size size;
+  final Color color;
+  final Color borderColor;
+  final String img;
+  final String text;
+  final TextStyle? textStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: ((context) => const MainScreen()),
+          ),
+        );
+      },
+      child: Container(
+        width: size.width / 1.2,
+        height: size.height / 15,
+        decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: borderColor, width: 1)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              img,
+              height: 40,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(
+              text,
+              style: textStyle,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
