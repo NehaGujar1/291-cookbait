@@ -77,10 +77,14 @@ class FirestoreDB {
         // fetchAllUrls.add(" ");
         // fetchAllNames.add(">=90");
         // fetchAllIds.add(" ");
+        fetchAllTexts.add(">=90");
+      } else if(i==1){
+        fetchAllBools.add('1');
+        fetchAllTexts.add(" ");
       } else {
         fetchAllBools.add('0');
+        fetchAllTexts.add(">=90");
       }
-      fetchAllTexts.add(">=90");
       fetchAllUrls.add(fetch_90[i]);
       fetchAllNames.add(fetch90Name[i]);
       fetchAllIds.add(fetch90Id[i]);
@@ -108,10 +112,15 @@ class FirestoreDB {
         // fetchAllUrls.add(" ");
         // fetchAllNames.add(">=80");
         // fetchAllIds.add(" ");
+        fetchAllTexts.add(">=80");
+      } else if(i==1){
+      fetchAllBools.add('1');
+      fetchAllTexts.add(" ");
       } else {
-        fetchAllBools.add('0');
-      }
+      fetchAllBools.add('0');
       fetchAllTexts.add(">=80");
+      }
+      // fetchAllTexts.add(">=80");
       fetchAllUrls.add(fetch_80[i]);
       fetchAllNames.add(fetch80Name[i]);
       fetchAllIds.add(fetch80Id[i]);
@@ -139,10 +148,15 @@ class FirestoreDB {
         // fetchAllUrls.add(" ");
         // fetchAllNames.add(">=70");
         // fetchAllIds.add(" ");
+        fetchAllTexts.add(">=70");
+      } else if(i==1){
+        fetchAllBools.add('1');
+        fetchAllTexts.add(" ");
       } else {
         fetchAllBools.add('0');
+        fetchAllTexts.add(">=70");
       }
-      fetchAllTexts.add(">=70");
+      // fetchAllTexts.add(">=70");
       fetchAllUrls.add(fetch_70[i]);
       fetchAllNames.add(fetch70Name[i]);
       fetchAllIds.add(fetch70Id[i]);
@@ -170,10 +184,15 @@ class FirestoreDB {
         // fetchAllUrls.add(" ");
         // fetchAllNames.add(">=60");
         // fetchAllIds.add(" ");
+        fetchAllTexts.add(">=60");
+      } else if(i==1){
+        fetchAllBools.add('1');
+        fetchAllTexts.add(" ");
       } else {
         fetchAllBools.add('0');
+        fetchAllTexts.add(">=60");
       }
-      fetchAllTexts.add(">=60");
+      // fetchAllTexts.add(">=60");
       fetchAllUrls.add(fetch_60[i]);
       fetchAllNames.add(fetch60Name[i]);
       fetchAllIds.add(fetch60Id[i]);
@@ -215,12 +234,22 @@ class FirestoreDB {
       //Start filling from here on
       fetchAllBools.add('1');
       fetchAllIds.add('1');
-      fetchAllUrls.add('https://www.archanaskitchen.com/masala-karela-recipe');
+      fetchAllUrls.add('https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Anjana_Chaturvedi/Cabbage_and_carrot_sambharo.jpg');
+      fetchAllNames.add('Masala Karela');
+      fetchAllTexts.add('No matches!Suggestions:');
+      fetchAllBools.add('1');
+      fetchAllIds.add('1');
+      fetchAllUrls.add('https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Anjana_Chaturvedi/Cabbage_and_carrot_sambharo.jpg');
+      fetchAllNames.add('Masala Karela');
+      fetchAllTexts.add(' ');
+      fetchAllBools.add('0');
+      fetchAllIds.add('1');
+      fetchAllUrls.add('https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Anjana_Chaturvedi/Cabbage_and_carrot_sambharo.jpg');
       fetchAllNames.add('Masala Karela');
       fetchAllTexts.add('Basic');
       fetchAllBools.add('0');
       fetchAllIds.add('1');
-      fetchAllUrls.add('https://www.archanaskitchen.com/masala-karela-recipe');
+      fetchAllUrls.add('https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Anjana_Chaturvedi/Cabbage_and_carrot_sambharo.jpg');
       fetchAllNames.add('Masala Karela');
       fetchAllTexts.add('Basic');
       // fetchAllIds.add('1');
@@ -259,15 +288,25 @@ class FirestoreDB {
     // fetchAllNames.add('');
     //Start filling from here on
     fetchAllBools.add('1');
-      fetchAllIds.add('1');
-      fetchAllUrls.add('https://www.archanaskitchen.com/masala-karela-recipe');
-      fetchAllNames.add('Masala Karela');
-      fetchAllTexts.add('Basic');
-      fetchAllBools.add('0');
-      fetchAllIds.add('1');
-      fetchAllUrls.add('https://www.archanaskitchen.com/masala-karela-recipe');
-      fetchAllNames.add('Masala Karela');
-      fetchAllTexts.add('Basic');
+    fetchAllIds.add('1');
+    fetchAllUrls.add('https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Anjana_Chaturvedi/Cabbage_and_carrot_sambharo.jpg');
+    fetchAllNames.add('Masala Karela');
+    fetchAllTexts.add('No matches!Suggestions:');
+    fetchAllBools.add('1');
+    fetchAllIds.add('1');
+    fetchAllUrls.add('https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Anjana_Chaturvedi/Cabbage_and_carrot_sambharo.jpg');
+    fetchAllNames.add('Masala Karela');
+    fetchAllTexts.add(' ');
+    fetchAllBools.add('0');
+    fetchAllIds.add('1');
+    fetchAllUrls.add('https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Anjana_Chaturvedi/Cabbage_and_carrot_sambharo.jpg');
+    fetchAllNames.add('Masala Karela');
+    fetchAllTexts.add('Basic');
+    fetchAllBools.add('0');
+    fetchAllIds.add('1');
+    fetchAllUrls.add('https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Anjana_Chaturvedi/Cabbage_and_carrot_sambharo.jpg');
+    fetchAllNames.add('Masala Karela');
+    fetchAllTexts.add('Basic');
     // fetchAllIds.add("Basic");
     // fetchAllUrls.add('');
     // fetchAllNames.add('');
@@ -280,14 +319,14 @@ class FirestoreDB {
     //Start filling from here on
     fetchAllBools.add('1');
       fetchAllIds.add('1');
-      fetchAllUrls.add('https://www.archanaskitchen.com/masala-karela-recipe');
+      fetchAllUrls.add('https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Anjana_Chaturvedi/Cabbage_and_carrot_sambharo.jpg');
       fetchAllNames.add('Masala Karela');
       fetchAllTexts.add('Basic');
-      fetchAllBools.add('0');
+      fetchAllBools.add('1');
       fetchAllIds.add('1');
-      fetchAllUrls.add('https://www.archanaskitchen.com/masala-karela-recipe');
+      fetchAllUrls.add('https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Anjana_Chaturvedi/Cabbage_and_carrot_sambharo.jpg');
       fetchAllNames.add('Masala Karela');
-      fetchAllTexts.add('Basic');
+      fetchAllTexts.add(' ');
     print("hellllllllllllllllllllllooooooooooooo");
     print(fetchAllUrls.length);
     for (int i = 0; i < fetchAllUrls.length; i++) {
