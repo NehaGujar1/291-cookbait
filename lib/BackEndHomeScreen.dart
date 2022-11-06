@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-List<String> ingredients =[];
+List<String> ingredients = [];
+
 class FirestoreDB {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<List<String>> getData() async {
     QuerySnapshot<Map<String, dynamic>> qr =
-    await FirebaseFirestore.instance.collection('ingredients').get();
+        await FirebaseFirestore.instance.collection('ingredients').get();
     List<String> str = [];
     for (var element in qr.docs) {
       final m = element.data();
@@ -15,5 +16,4 @@ class FirestoreDB {
     ingredients = str;
     return str;
   }
-
 }

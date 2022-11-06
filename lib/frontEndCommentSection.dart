@@ -1,32 +1,6 @@
-import 'package:cookbait/frontEndIndividualRecipe.dart';
+import 'frontEndIndividualRecipe.dart';
 import 'package:flutter/material.dart';
 import 'backEndCommentSection.dart';
-
-Widget _buildHeading({String name = ' '}) {
-  return Container(
-    width: 300,
-    //height: 40,
-    clipBehavior: Clip.none,
-    child: Text(
-      name,
-      style: const TextStyle(
-        fontSize: 30,
-        fontWeight: FontWeight.w500,
-      ),
-    ),
-  );
-}
-
-Widget _buildNormalText({String name = ' '}) {
-  return Text(
-    name,
-    style: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-      color: Colors.black38,
-    ),
-  );
-}
 
 class CommentSection extends StatefulWidget {
   final String recipeID;
@@ -48,8 +22,15 @@ class _CommentSectionState extends State<CommentSection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: const Text('Enter New Comment'),
-        title: _buildHeading(name: 'Enter New Comment'),
+        backgroundColor: const Color(0xFFD80041),
+        title: const Text(
+          'Enter new Comment!!',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
+            color: Colors.white,
+          ),
+        ),
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
@@ -163,7 +144,18 @@ class _CommentSectionState extends State<CommentSection> {
               ),
               Container(
                 padding: const EdgeInsets.all(10),
-                child: ElevatedButton(
+                child: SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      alignment: Alignment.topLeft,
+                      backgroundColor: const Color(0xFFD80041),
+                      shape: RoundedRectangleBorder(
+                        //to set border radius to button
+                        borderRadius: BorderRadius.circular(32),
+                      ),
+                      textStyle: const TextStyle(color: Colors.white),
+                    ),
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
                         name = nameController.text;
@@ -173,14 +165,19 @@ class _CommentSectionState extends State<CommentSection> {
                             name, email, comment, widget.recipeID, context);
                         if (!mounted) return;
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => IndividualRecipe(
-                                    recipeID: widget.recipeID)));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                IndividualRecipe(recipeID: widget.recipeID),
+                          ),
+                        );
                       }
                     },
-                    //child: const Text("Submit Data")),
-                    child: _buildNormalText(name: 'Comment')),
+                    child: const Text(
+                      'Add comment',
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

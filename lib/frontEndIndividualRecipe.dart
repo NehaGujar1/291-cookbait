@@ -99,6 +99,24 @@ class _IndividualRecipeState extends State<IndividualRecipe> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFD80041),
+          title: const Text(
+            'CookBait suggests....',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+            ),
+          ),
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back_ios),
+          ),
+        ),
         backgroundColor: const Color(0xFFF9F9F9),
         body: SingleChildScrollView(
           child: Card(
@@ -109,24 +127,6 @@ class _IndividualRecipeState extends State<IndividualRecipe> {
                 children: <Widget>[
                   const SizedBox(
                     height: 60,
-                  ),
-                  Container(
-                    height: 40,
-                    width: 40,
-                    alignment: Alignment.bottomLeft,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          alignment: Alignment.topLeft,
-                          backgroundColor: const Color(0xFFD80041),
-                          shape: RoundedRectangleBorder(
-                              //to set border radius to button
-                              borderRadius: BorderRadius.circular(32)),
-                          textStyle: const TextStyle(color: Colors.white)),
-                      onPressed: () => Navigator.pop(
-                        context,
-                      ),
-                      child: const Icon(Icons.arrow_back_outlined),
-                    ),
                   ),
                   FutureBuilder(
                     future: FirestoreRecipe().getData(widget.recipeID),
@@ -145,12 +145,11 @@ class _IndividualRecipeState extends State<IndividualRecipe> {
                       }
                       List<String>? list = snapshot.data;
                       var n = 3;
-                      n = int.parse(list![2]);
+                      n = int.parse(list![4]);
                       String ingredientsList = "";
-                      for (int i = 3; i < n + 3; i++)
-                      {
+                      for (int i = 5; i < n + 5; i++) {
                         ingredientsList =
-                            '$ingredientsList\n${i - 2}${list[i]}';
+                            '$ingredientsList\n${i - 4}${list[i]}';
                       }
                       return SizedBox(
                         //height: 400,
@@ -170,13 +169,23 @@ class _IndividualRecipeState extends State<IndividualRecipe> {
                             const SizedBox(
                               height: 20,
                             ),
+                            _buildSubheadings(name: 'Cuisine'),
+                            _buildNormalText(name: list[2]),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            _buildSubheadings(name: 'Total Time'),
+                            _buildNormalText(name: list[3]),
+                            const SizedBox(
+                              height: 20,
+                            ),
                             _buildSubheadings(name: 'Ingredients'),
                             _buildNormalText(name: ingredientsList),
                             const SizedBox(
                               height: 20,
                             ),
                             _buildSubheadings(name: 'Procedure'),
-                            _buildNormalText(name: list[n + 3]),
+                            _buildNormalText(name: list[n + 5]),
                             const SizedBox(
                               height: 20,
                             ),
@@ -226,11 +235,12 @@ class _IndividualRecipeState extends State<IndividualRecipe> {
                             List<String>? list = snapshot.data;
                             //print(list!.length);
                             return SizedBox(
-                                child: Column(
-                              children: <Widget>[
-                                _buildComments(all: list!),
-                              ],
-                            ));
+                              child: Column(
+                                children: <Widget>[
+                                  _buildComments(all: list!),
+                                ],
+                              ),
+                            );
                           },
                         ),
                       ],
@@ -248,23 +258,31 @@ class _IndividualRecipeState extends State<IndividualRecipe> {
                     height: 40,
                     width: 40,
                     alignment: Alignment.bottomLeft,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
+                    child: SizedBox(
+                      width: 200,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
                           alignment: Alignment.topLeft,
                           backgroundColor: const Color(0xFFD80041),
                           shape: RoundedRectangleBorder(
-                              //to set border radius to button
-                              borderRadius: BorderRadius.circular(32)),
-                          textStyle: const TextStyle(color: Colors.white)),
-                      //This onPressed function is subject to correction
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
+                            //to set border radius to button
+                            borderRadius: BorderRadius.circular(32),
+                          ),
+                          textStyle: const TextStyle(color: Colors.white),
+                        ),
+                        //This onPressed function is subject to correction
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
                             builder: (context) => CommentSection(
-                                  recipeID: widget.recipeID,
-                                )),
+                              recipeID: widget.recipeID,
+                            ),
+                          ),
+                        ),
+                        child: const Text(
+                          'Add Comment',
+                        ),
                       ),
-                      child: const Text("Add Comment"),
                     ),
                   ),
                 ],
