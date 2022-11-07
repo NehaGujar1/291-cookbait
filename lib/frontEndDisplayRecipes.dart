@@ -18,7 +18,7 @@ class _ChoicesScreenState extends State<ChoicesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("CookBait", textAlign: TextAlign.center),
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFD80041),
         elevation: 1.1,
       ),
       body: FutureBuilder(
@@ -40,17 +40,18 @@ class _ChoicesScreenState extends State<ChoicesScreen> {
               margin:
                   const EdgeInsets.only(left: 0, bottom: 0, right: 0, top: 0),
               padding:
-                  const EdgeInsets.only(left: 0, bottom: 0, right: 0, top: 0),
+                  const EdgeInsets.only(left: 8, bottom: 0, right: 8, top: 0),
               child: SafeArea(
                 bottom: false,
                 child: GridView.builder(
                   padding: const EdgeInsets.only(
-                      left: 0, bottom: 0, right: 0, top: 10),
+                      left: 16, bottom: 8, right: 16, top: 10),
                   itemCount: list!.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 20.0,
-                      mainAxisSpacing: 20.0),
+                      childAspectRatio:0.75,
+                      crossAxisSpacing: 4.0,
+                      mainAxisSpacing: 16.0),
                   itemBuilder: (context, index) {
                     {
                       if (list[index][1] == 'text') {
@@ -58,7 +59,8 @@ class _ChoicesScreenState extends State<ChoicesScreen> {
                       } else {
                         return InkWell(
                           customBorder: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(4),
+
                           ),
                           onTap: () {
                             String? incorrectRecipeID = list[index][3];
@@ -74,20 +76,36 @@ class _ChoicesScreenState extends State<ChoicesScreen> {
                             );
                           },
                           child: Container(
-                            width: 350,
-                            color: Colors.red,
+                            decoration: const BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 8.0,
+                                    offset: Offset(6,6),
+                                  ),
+                                ],
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
+
                             child: Column(
                               children: [
                                 list[index][0] == '1'
                                     ? Container(
-                                        color: Colors.white,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(10),
+                                            topRight: Radius.circular(10),
+                                          ),
+                                        ),
                                         height: 20,
-                                        width: 183,
+                                        width: 170,
                                         child: Text(
                                           list[index][4],
                                           style: const TextStyle(
-                                            fontFamily: 'arial',
-                                            fontSize: 15,
+                                            fontFamily: 'Nunito',
+                                            fontSize: 14,
                                             color:
                                                 Color.fromARGB(255, 68, 62, 62),
                                           ),
@@ -96,18 +114,18 @@ class _ChoicesScreenState extends State<ChoicesScreen> {
                                       )
                                     : Container(
                                         color: Colors.white,
-                                        height: 0,
+                                        height: 10,
                                       ),
-                                const SizedBox(
+                                /*const SizedBox(
                                   height: 10,
                                   width: 20,
-                                ),
+                                ),*/
                                 SizedBox(
-                                  height: 130,
-                                  width: 130,
+                                  height: 100,
+                                  width: 150,
                                   child: Image.network(list[index][1]),
                                 ),
-                                const SizedBox(
+                                SizedBox(
                                   height: 10,
                                   width: 20,
                                 ),
@@ -115,9 +133,11 @@ class _ChoicesScreenState extends State<ChoicesScreen> {
                                   child: Text(
                                     list[index][2],
                                     style: const TextStyle(
-                                        fontFamily: 'arial',
-                                        fontSize: 10,
-                                        color: Color.fromARGB(255, 68, 62, 62)),
+                                      fontFamily: 'Nunito',
+                                      //FontWeight.bold(w400),
+                                      fontSize: 14,
+                                      color: Colors.black54,
+                                    ),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),

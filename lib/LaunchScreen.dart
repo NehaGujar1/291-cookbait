@@ -91,7 +91,6 @@ class _LaunchScreenState extends State<LaunchScreen> {
                   width: 200,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      alignment: Alignment.topLeft,
                       backgroundColor: const Color(0xFFD80041),
                       shape: RoundedRectangleBorder(
                         //to set border radius to button

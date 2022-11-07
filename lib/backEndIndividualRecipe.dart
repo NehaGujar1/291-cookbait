@@ -11,7 +11,7 @@ class FirestoreComments {
   Future<bool> checkIfDocExists(String docId) async {
     try {
       var collectionRef =
-          FirebaseFirestore.instance.collection('collectionName');
+          FirebaseFirestore.instance.collection('comments');
 
       var doc = await collectionRef.doc(docId).get();
       return doc.exists;
@@ -21,7 +21,7 @@ class FirestoreComments {
   }
 
   Future<List<String>> getData(String? recipeID) async {
-    bool docExists = await checkIfDocExists('document_id');
+    bool docExists = await checkIfDocExists(recipeID!);
     if (docExists) {
       DocumentSnapshot<Map<String, dynamic>> qr = await FirebaseFirestore
           .instance
@@ -31,9 +31,11 @@ class FirestoreComments {
       List<String> str = [];
       final m = qr.data();
       il = m!.length;
+      print(il);
       while (i < il) {
         x = i.toString();
         jl = qr[x].length;
+        print(jl);
         for (int j = 2; j < jl; j = j + 1) {
           str.add(qr[x][1]);
           str.add(qr[x][j]);
@@ -60,11 +62,16 @@ class FirestoreRecipe {
     st.add(qr['Name']);
     st.add(qr['image-url']);
     st.add(qr['Cuisine']);
-    st.add(qr['TotalTimeInMins']);
+    //print("Cuisine is added");
+    int t = qr['TotalTimeInMins'];
+    st.add(t.toString()+' Minutes');
+    print("Total time is added");
     int x = qr['Ingredients'].length;
     st.add(x.toString());
+    print("Number of ingredients");
+    print(st[4]);
     for (int i = 0; i < x; i++) {
-      st.add(qr['Ingredients'][i]);
+      st.add('. '+qr['Ingredients'][i]);
     }
     st.add(qr['Recipe']);
     //print(st[0]);

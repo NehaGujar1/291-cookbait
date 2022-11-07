@@ -27,7 +27,7 @@ class FirestoreDB {
     List<String> fetch90Id = [];
     int mnj = 0;
     for (var element in qr.docs) {
-      if (mnj > 100) break;
+      if (mnj > 2000) break;
       final m = element.data();
       int i = 0, j = 0;
       List<dynamic> pointList = m['Ingredients'];
@@ -182,7 +182,7 @@ class FirestoreDB {
       fetchAllUrls.add(
           'https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Anjana_Chaturvedi/Cabbage_and_carrot_sambharo.jpg');
       fetchAllNames.add('Masala Karela');
-      fetchAllTexts.add('No matches!Suggestions:');
+      fetchAllTexts.add('No matches! Suggestions:');
       fetchAllBooleans.add('1');
       fetchAllIds.add('1');
       fetchAllUrls.add(

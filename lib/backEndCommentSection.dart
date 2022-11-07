@@ -5,7 +5,7 @@ class FireBaseCollectionOfComments {
   final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
   Future<void> addData(String? name, String? email, String? comment,
-      String? recipeID, BuildContext context) async {
+      String? recipeID) async {
     bool didIUpdateTheCommentCollection = false;
     QuerySnapshot<Map<String, dynamic>> collectionOfDocuments =
         await FirebaseFirestore.instance.collection('comments').get();

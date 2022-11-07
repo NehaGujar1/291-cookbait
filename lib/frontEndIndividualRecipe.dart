@@ -98,197 +98,202 @@ class _IndividualRecipeState extends State<IndividualRecipe> {
   var recipeDB = FirebaseFirestore.instance.collection("recipes").snapshots();
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color(0xFFD80041),
-          title: const Text(
-            'CookBait suggests....',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
+  Widget build(BuildContext context) => StreamBuilder<QuerySnapshot>(
+    stream: FirebaseFirestore.instance.collection('comments').snapshots(),
+    builder: (context, snapshot) {
+      return Scaffold(
+            appBar: AppBar(
+              backgroundColor: const Color(0xFFD80041),
+              title: const Text(
+                'CookBait suggests....',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                ),
+              ),
+              automaticallyImplyLeading: false,
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(Icons.arrow_back_ios),
+              ),
             ),
-          ),
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(Icons.arrow_back_ios),
-          ),
-        ),
-        backgroundColor: const Color(0xFFF9F9F9),
-        body: SingleChildScrollView(
-          child: Card(
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              color: const Color(0xFFF9F9F9),
-              child: Column(
-                children: <Widget>[
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  FutureBuilder(
-                    future: FirestoreRecipe().getData(widget.recipeID),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<String>?> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.none &&
-                          !snapshot.hasData) {
-                        return const Center(
-                          child: Text('Error'),
-                        );
-                      }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      List<String>? list = snapshot.data;
-                      var n = 3;
-                      n = int.parse(list![4]);
-                      String ingredientsList = "";
-                      for (int i = 5; i < n + 5; i++) {
-                        ingredientsList =
-                            '$ingredientsList\n${i - 4}${list[i]}';
-                      }
-                      return SizedBox(
-                        //height: 400,
+            backgroundColor: const Color(0xFFF9F9F9),
+            body: SingleChildScrollView(
+              child: Card(
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  color: const Color(0xFFF9F9F9),
+                  child: Column(
+                    children: <Widget>[
+                      const SizedBox(
+                        height: 60,
+                      ),
+                      FutureBuilder(
+                        future: FirestoreRecipe().getData(widget.recipeID),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<String>?> snapshot) {
+                          if (snapshot.connectionState == ConnectionState.none &&
+                              !snapshot.hasData) {
+                            return const Center(
+                              child: Text('Error'),
+                            );
+                          }
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          List<String>? list = snapshot.data;
+                          var n = 3;
+                          n = int.parse(list![4]);
+                          String ingredientsList = "";
+                          for (int i = 5; i < n + 5; i++) {
+                            ingredientsList =
+                                '$ingredientsList\n${i - 4}${list[i]}';
+                          }
+                          return SizedBox(
+                            //height: 400,
+                            child: Column(
+                              children: <Widget>[
+                                _buildHeading(name: list[0]),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                SizedBox(
+                                  width: 300,
+                                  height: 300,
+                                  child: Image(
+                                    image: NetworkImage(list[1]),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                _buildSubheadings(name: 'Cuisine'),
+                                _buildNormalText(name: list[2]),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                _buildSubheadings(name: 'Total Time'),
+                                _buildNormalText(name: list[3]),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                _buildSubheadings(name: 'Ingredients'),
+                                _buildNormalText(name: ingredientsList),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                _buildSubheadings(name: 'Procedure'),
+                                _buildNormalText(name: list[n + 5]),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      Container(
+                        width: 350,
+                        color: Colors.white,
                         child: Column(
                           children: <Widget>[
-                            _buildHeading(name: list[0]),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            SizedBox(
-                              width: 300,
-                              height: 300,
-                              child: Image(
-                                image: NetworkImage(list[1]),
+                            Container(
+                              width: 350,
+                              height: 40,
+                              padding: const EdgeInsets.all(10),
+                              color: const Color(0xFFD80041),
+                              child: const Text(
+                                'Comments',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  backgroundColor: Color(0xFFD80041),
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            _buildSubheadings(name: 'Cuisine'),
-                            _buildNormalText(name: list[2]),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            _buildSubheadings(name: 'Total Time'),
-                            _buildNormalText(name: list[3]),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            _buildSubheadings(name: 'Ingredients'),
-                            _buildNormalText(name: ingredientsList),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            _buildSubheadings(name: 'Procedure'),
-                            _buildNormalText(name: list[n + 5]),
-                            const SizedBox(
-                              height: 20,
+                            FutureBuilder(
+                              future: FirestoreComments().getData(widget.recipeID),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<List<String>?> snapshot) {
+                                if (snapshot.connectionState ==
+                                        ConnectionState.none &&
+                                    !snapshot.hasData) {
+                                  //print("if condition");
+                                  return const Center(
+                                    child: Text('Error'),
+                                  );
+                                }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                                List<String>? list = snapshot.data;
+                                //print(list!.length);
+                                return SizedBox(
+                                  child: Column(
+                                    children: <Widget>[
+                                      _buildComments(all: list!),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
-                      );
-                    },
-                  ),
-                  Container(
-                    width: 350,
-                    color: Colors.white,
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          width: 350,
-                          height: 40,
-                          padding: const EdgeInsets.all(10),
-                          color: const Color(0xFFD80041),
-                          child: const Text(
-                            'Comment Section',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              backgroundColor: Color(0xFFD80041),
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        FutureBuilder(
-                          future: FirestoreComments().getData(widget.recipeID),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<List<String>?> snapshot) {
-                            if (snapshot.connectionState ==
-                                    ConnectionState.none &&
-                                !snapshot.hasData) {
-                              //print("if condition");
-                              return const Center(
-                                child: Text('Error'),
-                              );
-                            }
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                            List<String>? list = snapshot.data;
-                            //print(list!.length);
-                            return SizedBox(
-                              child: Column(
-                                children: <Widget>[
-                                  _buildComments(all: list!),
-                                ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Container(
+                        height: 40,
+                        width: 100,
+                        alignment: Alignment.topLeft,
+                      ),
+                      Container(
+                        height: 40,
+                        //width: 40,
+                        alignment: Alignment.bottomCenter,
+                        child: SizedBox(
+                          width: 200,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              //alignment: Alignment.top,
+                              backgroundColor: const Color(0xFFD80041),
+                              shape: RoundedRectangleBorder(
+                                //to set border radius to button
+                                borderRadius: BorderRadius.circular(32),
                               ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    height: 40,
-                    width: 100,
-                    alignment: Alignment.topLeft,
-                  ),
-                  Container(
-                    height: 40,
-                    width: 40,
-                    alignment: Alignment.bottomLeft,
-                    child: SizedBox(
-                      width: 200,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          alignment: Alignment.topLeft,
-                          backgroundColor: const Color(0xFFD80041),
-                          shape: RoundedRectangleBorder(
-                            //to set border radius to button
-                            borderRadius: BorderRadius.circular(32),
-                          ),
-                          textStyle: const TextStyle(color: Colors.white),
-                        ),
-                        //This onPressed function is subject to correction
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CommentSection(
-                              recipeID: widget.recipeID,
+                              textStyle: const TextStyle(color: Colors.white),
+                            ),
+                            //This onPressed function is subject to correction
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CommentSection(
+                                  recipeID: widget.recipeID,
+                                ),
+                              ),
+                            ),
+                            child: const Text(
+                              'Add Comment',
                             ),
                           ),
-                        ),
-                        child: const Text(
-                          'Add Comment',
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
-      );
+          );
+    }
+  );
 }

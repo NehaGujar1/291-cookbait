@@ -1,4 +1,3 @@
-import 'frontEndIndividualRecipe.dart';
 import 'package:flutter/material.dart';
 import 'backEndCommentSection.dart';
 
@@ -18,6 +17,12 @@ class _CommentSectionState extends State<CommentSection> {
   final TextEditingController commentController = TextEditingController();
   String? name, email, comment;
 
+  void addDataToBackend(String? name, String? email, String? comment,
+      String recipeID) async {
+    await FireBaseCollectionOfComments()
+        .addData(name, email, comment, recipeID);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +39,7 @@ class _CommentSectionState extends State<CommentSection> {
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back_ios),
         ),
@@ -145,10 +150,9 @@ class _CommentSectionState extends State<CommentSection> {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: SizedBox(
-                  width: 200,
+                  width: 150,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      alignment: Alignment.topLeft,
                       backgroundColor: const Color(0xFFD80041),
                       shape: RoundedRectangleBorder(
                         //to set border radius to button
@@ -156,21 +160,14 @@ class _CommentSectionState extends State<CommentSection> {
                       ),
                       textStyle: const TextStyle(color: Colors.white),
                     ),
-                    onPressed: () async {
+                    onPressed: () {
                       if (formKey.currentState!.validate()) {
                         name = nameController.text;
                         comment = commentController.text;
                         email = emailController.text;
-                        await FireBaseCollectionOfComments().addData(
-                            name, email, comment, widget.recipeID, context);
-                        if (!mounted) return;
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                IndividualRecipe(recipeID: widget.recipeID),
-                          ),
-                        );
+                        Navigator.of(context).pop();
+                        addDataToBackend(
+                            name, email, comment, widget.recipeID);
                       }
                     },
                     child: const Text(

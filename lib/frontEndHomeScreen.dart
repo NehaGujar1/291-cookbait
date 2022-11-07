@@ -22,7 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFD80041),
         elevation: 1.1,
         automaticallyImplyLeading: false,
         leading: IconButton(
@@ -97,10 +97,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
                 SizedBox(
-                  width: 200,
+                  width: 175,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      alignment: Alignment.topLeft,
                       backgroundColor: const Color(0xFFD80041),
                       shape: RoundedRectangleBorder(
                         //to set border radius to button
@@ -114,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => ChoicesScreen(
-                                selectedIngredients: selectedItemsForDebugging),
+                                selectedIngredients: selectedItems),
                           ),
                         );
                       } else {
@@ -130,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                             ),
                             content: const Text(
-                                'Please select atleast one ingredient'),
+                                'Please select atleast one ingredient!'),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
