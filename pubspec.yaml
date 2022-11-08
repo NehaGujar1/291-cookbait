@@ -37,6 +37,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.1.1
   cloud_firestore: ^4.0.3
+  dropdown_search: ^5.0.3
+  multi_select_flutter: ^4.1.2
+  collection: ^1.16.0
+
+
+
 
 dev_dependencies:
   flutter_test:
@@ -54,8 +60,21 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/search.png
+    - assets/cook.png
+    - assets/ingredients.png
 
-  # The following line ensures that the Material Icons font is
+  fonts:
+    - family: nunito
+      fonts:
+        - asset: assets/fonts/Nunito-VariableFont_wght.ttf
+    - family: raleway
+      fonts:
+        - asset: assets/fonts/Raleway-VariableFont_wght.ttf
+          weight: 700
+
+  # The following line ensures that the Material Icons' font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
